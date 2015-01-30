@@ -64,7 +64,7 @@ function publishdialog(sites_list,type,itemSource,file){
 $(document).ready(function () {
   var b = {};
   if (typeof FileActions !== 'undefined' && $('#dir').length>0) {
-    
+
     FileActions.register('file', t('user_wordpress','Publish'), OC.PERMISSION_READ, function (file) {
       return OC.imagePath('user_wordpress', 'publish.svg');
     }, function (file) {
@@ -76,7 +76,7 @@ $(document).ready(function () {
 		      var filepath = $('#dir').val() + '/' + file;
 		      $.ajax({
 		        type: 'POST',
-		        url: OC.linkTo('user_wordpress', 'ajax/sites.php?=f='+file),
+		        url: OC.linkTo('', 'index.php/apps/user_wordpress/ajax/sites.php?=f='+file),
 		        dataType: 'json',
 		        async: false,
 		        success: function (sites_list) {
@@ -86,17 +86,17 @@ $(document).ready(function () {
 					
 					the_item=OC.Share.loadItem(type,itemSource);
 					
-			
+
 					//notshared
 					
 					if(the_item.shares==false || the_item.shares.length==0){
-					
+
 						OC.Share.share(type, itemSource, OC.Share.SHARE_TYPE_LINK, '', OC.PERMISSION_READ, function() {
 							publishdialog(sites_list,type,itemSource,file);
 						});
 					}
 					else{
-						//console.log('shared');
+						// console.log('shared');
 						publishdialog(sites_list,type,itemSource,file);	
 					}
 		        }			
@@ -106,5 +106,4 @@ $(document).ready(function () {
     });
     
   };
-  
 });
